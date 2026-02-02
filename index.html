@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Createx</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app-shell hidden" id="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">C</div>
+          <div>
+            <h1>Createx</h1>
+            <p>Social, reimagined</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <button class="nav-link active" data-view="feed">For You</button>
+          <button class="nav-link" data-view="stories">Stories</button>
+          <button class="nav-link" data-view="messages">Messages</button>
+          <button class="nav-link" data-view="profile">Profile</button>
+          <button class="nav-link" data-view="settings">Settings</button>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="current-user" id="currentUser"></div>
+          <button class="ghost" id="logoutBtn">Log out</button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <h2 id="viewTitle">For You</h2>
+            <p id="viewSubtitle">Discover posts tailored to you</p>
+          </div>
+          <div class="topbar-actions">
+            <button class="pill" id="openComposer">Create Post</button>
+            <button class="pill ghost" id="openStory">Add Story</button>
+          </div>
+        </header>
+
+        <section class="view" id="feedView">
+          <div class="composer" id="composer">
+            <div class="composer-header">
+              <h3>Share a new post</h3>
+              <button class="ghost" id="closeComposer">Close</button>
+            </div>
+            <form id="postForm">
+              <label>
+                Caption
+                <textarea name="caption" rows="3" required></textarea>
+              </label>
+              <label>
+                Image URL (optional)
+                <input type="url" name="image" placeholder="https://" />
+              </label>
+              <button type="submit" class="pill">Post</button>
+            </form>
+          </div>
+
+          <div class="feed" id="feed"></div>
+        </section>
+
+        <section class="view hidden" id="storiesView">
+          <div class="story-grid" id="stories"></div>
+        </section>
+
+        <section class="view hidden" id="messagesView">
+          <div class="messages-toolbar">
+            <label>
+              Start a new chat
+              <select id="newMessageUser"></select>
+            </label>
+            <button class="pill ghost" id="startChat">Create thread</button>
+          </div>
+          <div class="messages">
+            <div class="thread-list" id="threadList"></div>
+            <div class="thread" id="thread">
+              <div class="thread-header" id="threadHeader"></div>
+              <div class="thread-body" id="threadBody"></div>
+              <form class="thread-composer" id="messageForm">
+                <input
+                  type="text"
+                  name="message"
+                  placeholder="Write a message..."
+                  required
+                />
+                <button type="submit" class="pill">Send</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="view hidden" id="profileView">
+          <div class="profile-card" id="profileCard"></div>
+          <div class="profile-posts">
+            <h3>Your posts</h3>
+            <div class="feed" id="profileFeed"></div>
+          </div>
+        </section>
+
+        <section class="view hidden" id="settingsView">
+          <div class="settings-panel">
+            <h3>Account</h3>
+            <form id="profileForm">
+              <label>
+                Display name
+                <input type="text" name="displayName" required />
+              </label>
+              <label>
+                Bio
+                <textarea name="bio" rows="3"></textarea>
+              </label>
+              <label>
+                Avatar URL
+                <input type="url" name="avatar" placeholder="https://" />
+              </label>
+              <button type="submit" class="pill">Save changes</button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="auth" id="auth">
+      <div class="auth-panel">
+        <div class="brand auth-brand">
+          <div class="brand-mark">C</div>
+          <div>
+            <h1>Createx</h1>
+            <p>Modern social media built for focus.</p>
+          </div>
+        </div>
+        <div class="auth-forms">
+          <form id="signupForm">
+            <h2>Create your account</h2>
+            <label>
+              Name
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" required minlength="6" />
+            </label>
+            <button type="submit" class="pill">Sign up</button>
+          </form>
+          <form id="loginForm">
+            <h2>Welcome back</h2>
+            <label>
+              Email
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" required />
+            </label>
+            <button type="submit" class="pill ghost">Log in</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <template id="postTemplate">
+      <article class="post">
+        <header>
+          <div class="avatar"></div>
+          <div>
+            <h4 class="post-author"></h4>
+            <p class="post-meta"></p>
+          </div>
+        </header>
+        <p class="post-caption"></p>
+        <img class="post-image" alt="" />
+        <div class="post-actions">
+          <button class="like-btn">❤️ <span>0</span></button>
+          <button class="comment-toggle">💬 Comment</button>
+        </div>
+        <div class="comments"></div>
+        <form class="comment-form">
+          <input type="text" name="comment" placeholder="Write a comment" required />
+          <button type="submit" class="pill ghost">Post</button>
+        </form>
+      </article>
+    </template>
+
+    <template id="storyTemplate">
+      <div class="story-card">
+        <div class="story-media"></div>
+        <div>
+          <h4 class="story-author"></h4>
+          <p class="story-caption"></p>
+        </div>
+      </div>
+    </template>
+
+    <template id="threadTemplate">
+      <button class="thread-item">
+        <div class="avatar"></div>
+        <div>
+          <h4 class="thread-name"></h4>
+          <p class="thread-preview"></p>
+        </div>
+      </button>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
